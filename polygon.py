@@ -7,6 +7,8 @@ import numpy
 import matplotlib
 import matplotlib.path
 
+# hi lauren
+
 if __name__ == "__main__":
 
     img_fn = sys.argv[1]
