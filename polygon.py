@@ -15,11 +15,13 @@ if __name__ == "__main__":
 
     reg_fn = sys.argv[2]
 
+    extname = sys.argv[3]
+
     #
     # read image file
     #
     hdulist = pyfits.open(img_fn)
-    data = hdulist[0].data.T.copy()
+    data = hdulist[extname].data.T.copy()
     print data.shape
 
     #
