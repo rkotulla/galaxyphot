@@ -18,8 +18,29 @@ if __name__ == "__main__":
 
     polygon_reg = sys.argv[2]
 
-    segmentation_fn = sys.argv[3]
+    sex_config = sys.argv[3]
 
+    sci_fn, wht_fn = "tmp_sci.fits", "tmp_wht.fits"
+    segmentation_fn = "segmentation.fits"
+    pyfits.PrimaryHDU(
+        data=img_hdu['SCI'].data,
+        header=img_hdu['SCI'].header).writeto(sci_fn, clobber=True)
+    pyfits.PrimaryHDU(
+        data=img_hdu['WHT'].data,
+        header=img_hdu['WHT'].header).writeto(wht_fn, clobber=True)
+
+    sextractor_cmd = """
+    sex -c %s
+    -CHECKIMAGE_TYPE SEGMENTATION
+    -CHECKIMAGE_NAME %s
+    -WEIGHT_TYPE MAP_WEIGHT
+    -WEIGHT_IMAGE %s
+    -FILTER N
+    -VERBOSE_TYPE QUIET
+    %s""" % (sex_config, segmentation_fn, wht_fn, sci_fn)
+    sex_cmd = " ".join(sextractor_cmd.split())
+    print sex_cmd
+    os.system(sex_cmd)
 
     mask_2d = polygon.create_mask(img_fn, polygon_reg, 'SCI')
 
