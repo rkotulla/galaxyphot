@@ -20,8 +20,10 @@ if __name__ == "__main__":
 
     sex_config = sys.argv[3]
 
-    sci_fn, wht_fn = "tmp_sci.fits", "tmp_wht.fits"
-    segmentation_fn = "segmentation.fits"
+    filebase = os.path.splitext(img_fn)[0]
+
+    sci_fn, wht_fn = filebase+".SCI.fits", filebase+".WHT.fits
+    segmentation_fn = filebase=".segmentation.fits"
     pyfits.PrimaryHDU(
         data=img_hdu['SCI'].data,
         header=img_hdu['SCI'].header).writeto(sci_fn, clobber=True)
@@ -57,14 +59,14 @@ if __name__ == "__main__":
         mode='reflect',
     )
 
-    pyfits.PrimaryHDU(data=background_mask).writeto("bgmask.fits", clobber=True)
-    pyfits.PrimaryHDU(data=bg_grown).writeto("bggrown.fits", clobber=True)
+    # pyfits.PrimaryHDU(data=background_mask).writeto("bgmask.fits", clobber=True)
+    # pyfits.PrimaryHDU(data=bg_grown).writeto("bggrown.fits", clobber=True)
 
     noise_img = img_hdu['SCI'].data.copy()
     # noise_img[~background] = numpy.NaN
     noise_img[bg_grown > 1e-5] = numpy.NaN
 
-    pyfits.PrimaryHDU(data=noise_img).writeto("noise.fits", clobber=True)
+    # pyfits.PrimaryHDU(data=noise_img).writeto("noise.fits", clobber=True)
 
 
     bg_level = numpy.nanmedian(noise_img)
