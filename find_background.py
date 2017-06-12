@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     filebase = os.path.splitext(img_fn)[0]
 
-    sci_fn, wht_fn = filebase+".SCI.fits", filebase+".WHT.fits
+    sci_fn, wht_fn = filebase+".SCI.fits", filebase+".WHT.fits"
     segmentation_fn = filebase=".segmentation.fits"
     pyfits.PrimaryHDU(
         data=img_hdu['SCI'].data,
