@@ -51,7 +51,7 @@ def create_mask(img_fn, reg_fn, extname):
                 wcs = astWCS.WCS(hdulist[extname].header, mode='pyfits')
                 xy = wcs.wcs2pix(skycoords[:,0], skycoords[:,1])
                 coords = numpy.array(xy)
-                print coords
+                #print coords
 
 
             else:
@@ -59,7 +59,7 @@ def create_mask(img_fn, reg_fn, extname):
                           line.split("(")[1].split(")")[0].split(",")]
                 # print coords
                 coords = numpy.array(coords).reshape((-1, 2))
-                print coords
+                #print coords
 
 
 
